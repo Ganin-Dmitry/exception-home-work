@@ -6,13 +6,13 @@ import pro.sky.exceptionhomework.exception.WrongPasswordException;
 
 @Service
 public class ExceptionHomeWorkServiceImpl implements ExceptionHomeWorkService {
-    public String registration (String login,
+    public static String registration (String login,
                                 String password,
                                 String confirmPassword) {
-        if (!checkFieldSimbol(login) || login.length() > 20) {
+        if (!checkFieldSimbol(login) || !checkFieldLength(login)) {
             throw new WrongLoginException("Логин введен некорректно");
         }
-        if (!checkFieldSimbol(password) || password.length() > 20) {
+        if (!checkFieldSimbol(password) || !checkFieldLength(password)) {
             throw new WrongPasswordException("Пароль введен некорректно");
         }
         if (!password.equals(confirmPassword)) {
@@ -21,7 +21,7 @@ public class ExceptionHomeWorkServiceImpl implements ExceptionHomeWorkService {
         return "";
     }
 
-    public boolean checkFieldSimbol (String field) {
+    public static boolean checkFieldSimbol (String field) {
         String simbolStr = "QqWwEeRrTtYyUuIiOoPpAaSsDdFfGgHhJjKkLlZzXxCcVvBbNnMm1234567890_";
         for (int simbol = 0; simbol < field.length(); simbol++) {
             if (simbolStr.indexOf(field.charAt(simbol)) == -1) {
@@ -29,5 +29,13 @@ public class ExceptionHomeWorkServiceImpl implements ExceptionHomeWorkService {
             }
         }
         return true;
+    }
+
+    public static boolean checkFieldLength (String field) {
+        if (field.length() <= 20) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -7,14 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.sky.exceptionhomework.exception.WrongLoginException;
 import pro.sky.exceptionhomework.exception.WrongPasswordException;
 import pro.sky.exceptionhomework.service.ExceptionHomeWorkService;
+import pro.sky.exceptionhomework.service.ExceptionHomeWorkServiceImpl;
 
 @RestController
 @RequestMapping(path = "/account")
 public class ExceptionHomeWorkController {
-    private final ExceptionHomeWorkService exceptionHomeWorkService;
-    public ExceptionHomeWorkController (ExceptionHomeWorkService exceptionHomeWorkService) {
-        this.exceptionHomeWorkService = exceptionHomeWorkService;
-    }
 
     @GetMapping
     public String startView () {
@@ -31,7 +28,7 @@ public class ExceptionHomeWorkController {
                                 @RequestParam (name = "password", required = false) String password,
                                 @RequestParam (name = "confirmPassword", required = false) String confirmPassword) {
         try{
-            return exceptionHomeWorkService.registration(login, password, confirmPassword);
+            return ExceptionHomeWorkServiceImpl.registration(login, password, confirmPassword);
         } catch (WrongLoginException e) {
             return "Логин введен некорректно";
         } catch (WrongPasswordException e) {
